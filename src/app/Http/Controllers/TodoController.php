@@ -10,9 +10,9 @@ class TodoController extends Controller
 {
     private $todo;
 
-    public function __construct(Todo $todo)
+    public function __construct(Todo $todoInstance)
     {
-        $this->todo = $todo;
+        $this->todo = $todoInstance;
     }
 
     public function create()
@@ -24,10 +24,13 @@ class TodoController extends Controller
     {
         $todos = $this->todo->all();
 
-        return view('todo.index', ['todos' => $todos]);
+        return view('todo.index', ['todos' => $todos]); //この値を次に渡す（この場合はindex宛）
     }
 
-    public function store(TodoRequest $request)
+    public function store(TodoRequest $request) 
+    //型指定int($~)みたいな場合はintしか入らない。
+    // stringの場合はstringのみ。
+    // object型の時はクラス名の指定をすることが大事。
     {
     // $content = $request->input('content');
         $inputs = $request->all(); // 変更
@@ -87,3 +90,6 @@ class TodoController extends Controller
 //         return view('todo.index');
 //     }
 // }
+
+
+// view関数（なし）とredirect関数（あり）の違いはDBの編集の有無
